@@ -3,7 +3,7 @@ defmodule Steamex.Mixfile do
 
   def project do
     [app: :steamex,
-     version: "0.0.1",
+     version: "0.0.2",
      elixir: "~> 1.0",
      description: description,
      package: package,
@@ -16,7 +16,7 @@ defmodule Steamex.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger, :httpoison]]
+    [applications: [:logger, :httpoison, :plug]]
   end
 
   # Dependencies can be Hex packages:
@@ -29,7 +29,12 @@ defmodule Steamex.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    [{:httpoison, "~> 0.7.2"}, {:plug, "~> 1.0.0"}]
+    [
+      {:httpoison, "~> 0.7.2"},
+      {:plug, "~> 1.0.0"},
+      {:ex_doc, ">= 0.0.0", only: :docs},
+      {:earmark, ">= 0.0.0", only: :docs},
+    ]
   end
 
   defp description do
