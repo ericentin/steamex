@@ -1,15 +1,21 @@
 defmodule Steamex.Mixfile do
   use Mix.Project
 
+  @version "0.0.2"
+
   def project do
     [app: :steamex,
-     version: "0.0.2",
+     version: @version,
      elixir: "~> 1.0",
      description: description,
      package: package,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps]
+     deps: deps,
+     name: "Steamex",
+     docs: [source_ref: "v#{@version}", main: "Steamex",
+            source_url: "https://github.com/antipax/steamex"]
+    ]
   end
 
   # Configuration for the OTP application
@@ -38,7 +44,7 @@ defmodule Steamex.Mixfile do
   end
 
   defp description do
-    "Steam API and Auth (via Plug) for Elixir"
+    "Steam API and Auth (with Phoenix/Plug integration) for Elixir"
   end
 
   defp package do
