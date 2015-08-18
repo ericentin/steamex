@@ -28,7 +28,7 @@ defmodule Steamex.Auth.Plug do
     ignored.
   """
 
-  import Plug.Conn
+  alias Plug.Conn, as: C
 
   def init(options \\ []) do
     Keyword.merge([steamex_auth: Steamex.Auth], options)
@@ -36,11 +36,11 @@ defmodule Steamex.Auth.Plug do
 
   def call(conn, options) do
     try do
-      conn = fetch_query_params(conn)
+      conn = C.fetch_query_params(conn)
 
       {conn, options[:steamex_auth].validate_payload(conn.query_params)}
     rescue
-      _ -> send_resp(conn, 403, "")
+      _ -> C.send_resp(conn, 403, "")
     else
       {conn, steamid64} ->
         default_to =
@@ -55,10 +55,10 @@ defmodule Steamex.Auth.Plug do
           end
 
         conn
-        |> fetch_session
-        |> put_session(:steamex_steamid64, steamid64)
-        |> put_resp_header("location", to)
-        |> send_resp(302, "")
+        |> C.fetch_session
+        |> C.put_session(:steamex_steamid64, steamid64)
+        |> C.put_resp_header("location", to)
+        |> C.send_resp(302, "")
     end
   end
 end

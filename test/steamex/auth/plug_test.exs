@@ -33,7 +33,6 @@ defmodule Steamex.Auth.PlugTest do
     assert_success "/"
   end
 
-  @async false
   test "success with config override redirect_to" do
     try do
       Application.put_env(:steamex, Steamex, redirect_to: "/foobar")

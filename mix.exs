@@ -1,7 +1,7 @@
 defmodule Steamex.Mixfile do
   use Mix.Project
 
-  @version "0.0.2"
+  @version "0.0.3"
 
   def project do
     [app: :steamex,
@@ -22,7 +22,7 @@ defmodule Steamex.Mixfile do
   #
   # Type `mix help compile.app` for more information
   def application do
-    [applications: [:logger, :httpoison, :plug]]
+    [applications: [:logger, :httpoison]]
   end
 
   # Dependencies can be Hex packages:
@@ -37,7 +37,10 @@ defmodule Steamex.Mixfile do
   defp deps do
     [
       {:httpoison, "~> 0.7.2"},
-      {:plug, "~> 1.0.0"},
+      {:sweet_xml, "~> 0.3.0"},
+
+      {:plug, "~> 1.0.0", only: :test},
+
       {:ex_doc, ">= 0.0.0", only: :docs},
       {:earmark, ">= 0.0.0", only: :docs},
     ]
