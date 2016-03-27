@@ -53,7 +53,7 @@ defmodule Steamex.Mixfile do
   defp package do
     [
       files: ["lib", "mix.exs", "README.md", "LICENSE"],
-      contributors: ["Eric Entin"],
+      maintainers: ["Eric Entin"],
       licenses: ["Apache 2.0"],
       links: %{
         "GitHub" => "https://github.com/antipax/steamex"
