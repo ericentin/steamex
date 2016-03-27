@@ -61,7 +61,7 @@ defmodule Steamex.SteamID do
       76561197961358433
   """
   @spec steam_id_to_community_id(binary) :: pos_integer
-  def steam_id_to_community_id(<<"STEAM_0:", steam_id1 :: binary-size(1), ":", steam_id2 :: binary>>) do
+  def steam_id_to_community_id(<<"STEAM_", _ :: binary-size(1),":", steam_id1 :: binary-size(1), ":", steam_id2 :: binary>>) do
     {steam_id1, ""} = Integer.parse(steam_id1)
     {steam_id2, ""} = Integer.parse(steam_id2)
     steam_id1 + steam_id2 * 2 + 76561197960265728

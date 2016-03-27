@@ -44,12 +44,12 @@ defmodule Steamex.Auth do
 
     params =
       Dict.take(payload, signed_param_names)
-      |> Dict.merge %{
+      |> Dict.merge(%{
         "openid.assoc_handle" => Dict.fetch!(payload, "openid.assoc_handle"),
         "openid.sig" => Dict.fetch!(payload, "openid.sig"),
         "openid.ns" => Dict.fetch!(payload, "openid.ns"),
         "openid.mode" => "check_authentication"
-      }
+      })
 
     Application.ensure_all_started(:httpoison)
 
