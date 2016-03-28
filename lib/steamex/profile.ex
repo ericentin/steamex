@@ -205,7 +205,7 @@ defmodule Steamex.Profile do
   defp extract_string(entity, xpath) do
     case xpath(entity, xpath) do
       nil -> nil
-      result -> :erlang.list_to_binary(result)
+      result -> List.to_string(result)
     end
   end
 
