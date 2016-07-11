@@ -1,7 +1,7 @@
 defmodule Steamex.Mixfile do
   use Mix.Project
 
-  @version "0.0.5"
+  @version "0.0.6"
 
   def project do
     [app: :steamex,
@@ -39,10 +39,9 @@ defmodule Steamex.Mixfile do
       {:httpoison, "~> 0.7"},
       {:sweet_xml, "~> 0.3"},
 
-      {:plug, "~> 1.0", only: :test},
+      {:plug, "~> 1.0", optional: true},
 
-      {:ex_doc, ">= 0.0.0", only: :docs},
-      {:earmark, ">= 0.0.0", only: :docs},
+      {:ex_doc, ">= 0.0.0", only: :docs}
     ]
   end
 

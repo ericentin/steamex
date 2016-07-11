@@ -31,9 +31,12 @@ defmodule Steamex.Auth.Phoenix.View do
 
     return_to = apply(helpers, options[:return_to_helper], [conn, []])
 
-    if redirect_to = options[:redirect_to] do
-      return_to = return_to <> "?" <> URI.encode_query(%{redirect_to: redirect_to})
-    end
+    return_to =
+      if redirect_to = options[:redirect_to] do
+        return_to <> "?" <> URI.encode_query(%{redirect_to: redirect_to})
+      else
+        return_to
+      end
 
     Steamex.Auth.auth_url(realm, return_to)
   end
