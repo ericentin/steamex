@@ -38,16 +38,16 @@ defmodule Steamex.Auth do
   """
   @spec validate_payload(map, atom) :: integer
   def validate_payload(payload, httpoison \\ HTTPoison) do
-    signed = Dict.fetch!(payload, "openid.signed")
+    signed = Map.fetch!(payload, "openid.signed")
 
     signed_param_names = String.split(signed, ",") |> Enum.map(&"openid.#{&1}")
 
     params =
-      Dict.take(payload, signed_param_names)
-      |> Dict.merge(%{
-        "openid.assoc_handle" => Dict.fetch!(payload, "openid.assoc_handle"),
-        "openid.sig" => Dict.fetch!(payload, "openid.sig"),
-        "openid.ns" => Dict.fetch!(payload, "openid.ns"),
+      Map.take(payload, signed_param_names)
+      |> Map.merge(%{
+        "openid.assoc_handle" => Map.fetch!(payload, "openid.assoc_handle"),
+        "openid.sig" => Map.fetch!(payload, "openid.sig"),
+        "openid.ns" => Map.fetch!(payload, "openid.ns"),
         "openid.mode" => "check_authentication"
       })
 
