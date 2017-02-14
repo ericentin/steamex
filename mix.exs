@@ -7,11 +7,11 @@ defmodule Steamex.Mixfile do
     [app: :steamex,
      version: @version,
      elixir: "~> 1.0",
-     description: description,
-     package: package,
+     description: description(),
+     package: package(),
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps,
+     deps: deps(),
      name: "Steamex",
      docs: [source_ref: "v#{@version}", main: "Steamex",
             source_url: "https://github.com/antipax/steamex"]
@@ -36,10 +36,10 @@ defmodule Steamex.Mixfile do
   # Type `mix help deps` for more examples and options
   defp deps do
     [
-      {:httpoison, "~> 0.7"},
-      {:sweet_xml, "~> 0.3"},
+      {:httpoison, "~> 0.11"},
+      {:sweet_xml, "~> 0.6"},
 
-      {:plug, "~> 1.0", optional: true},
+      {:plug, "~> 1.3", optional: true},
 
       {:ex_doc, ">= 0.0.0", only: :docs}
     ]

@@ -45,7 +45,7 @@ defmodule Steamex.Auth.Plug do
       {conn, steamid64} ->
         default_to =
           (Application.get_env(:steamex, Steamex) || [])
-          |> Dict.get(:redirect_to, "/")
+          |> Keyword.get(:redirect_to, "/")
 
         to =
           case conn.query_params["redirect_to"] do
