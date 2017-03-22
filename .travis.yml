@@ -4,4 +4,4 @@ dist: trusty
 elixir:
   - 1.4.2
 otp_release:
-  - 19.2.3
+  - 19.3
