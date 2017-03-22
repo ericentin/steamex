@@ -1,7 +1,7 @@
 defmodule Steamex.Mixfile do
   use Mix.Project
 
-  @version "0.0.6"
+  @version "0.0.7"
 
   def project do
     [app: :steamex,
@@ -41,7 +41,7 @@ defmodule Steamex.Mixfile do
 
       {:plug, "~> 1.3", optional: true},
 
-      {:ex_doc, ">= 0.0.0", only: :docs}
+      {:ex_doc, ">= 0.0.0", only: :dev}
     ]
   end
 
