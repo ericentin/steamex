@@ -1,5 +1,45 @@
 defmodule Steamex.Profile do
   import SweetXml
+  
+  defmodule UserData do
+    defstruct [
+      steamid: nil,
+      communityvisibilitystate: nil,
+      profilestate: nil,
+      personaname: nil,
+      lastlogoff: nil,
+      commentpermission: nil,
+      profileurl: nil,
+      avatar: nil,
+      avatarmedium: nil,
+      avatarfull: nil,
+      personastate: nil,
+      realname: nil,
+      timecreated: nil,
+      personastateflags: nil,
+      primaryclanid: nil,
+      loccountrycode: nil,
+    ]
+
+    @type t :: %__MODULE__{
+      steamid: binary | nil,
+      communityvisibilitystate: binary | nil,
+      profilestate: binary | nil,
+      personaname: binary | nil,
+      lastlogoff: binary | nil,
+      commentpermission: binary | nil,
+      profileurl: binary | nil,
+      avatar: binary | nil,
+      avatarmedium: binary | nil,
+      avatarfull: binary | nil,
+      personastate: binary | nil,
+      realname: binary | nil,
+      timecreated: binary | nil,
+      personastateflags: binary | nil,
+      primaryclanid: binary | nil,
+      loccountrycode: binary | nil,
+    }
+  end
 
   defmodule MostPlayedGame do
     defstruct [
@@ -117,6 +157,11 @@ defmodule Steamex.Profile do
     fetch(community_id_or_custom_url, HTTPoison)
   end
 
+  @spec fetch_custom(pos_integer | binary) :: Steamex.Profile.UserData.t
+  def fetch_custom(url) do
+    fetch_custom(url, HTTPoison)
+  end
+
   @doc false
   def fetch(community_id_or_custom_url, httpoison) do
     base_url = Steamex.SteamID.base_url(community_id_or_custom_url) <> "?xml=1"
@@ -129,6 +174,42 @@ defmodule Steamex.Profile do
       %HTTPoison.Response{status_code: 200, body: body} -> from_xml(body)
       resp -> raise "Steam profile could not be loaded: #{inspect resp}"
     end
+  end
+
+  @doc false
+  def fetch_custom(url, httpoison) do
+    Application.ensure_all_started(:httpoison)
+
+    response = httpoison.get!(url, [], hackney: [follow_redirect: true])
+
+    case response do
+      %HTTPoison.Response{status_code: 200, body: body} -> custom_from_xml(body)
+      resp -> raise "Steam profile could not be loaded: #{inspect resp}"
+    end
+  end
+
+  @doc false
+  defp custom_from_xml(doc) do
+    p = xpath(doc, ~x"//response/players/player")
+
+    %Steamex.Profile.UserData{
+      steamid: extract_string(p, ~x"//steamid/text()"),
+      communityvisibilitystate: extract_integer(p, ~x"//communityvisibilitystate/text()"),
+      profilestate: extract_integer(p, ~x"//profilestate/text()"),
+      personaname: extract_string(p, ~x"//personaname/text()"),
+      lastlogoff: extract_string(p, ~x"//lastlogoff/text()"),
+      commentpermission: extract_integer(p, ~x"//commentpermission/text()"),
+      profileurl: extract_string(p, ~x"//profileurl/text()"),
+      avatar: extract_string(p, ~x"//avatar/text()"),
+      avatarmedium: extract_string(p, ~x"//avatarmedium/text()"),
+      avatarfull: extract_string(p, ~x"//avatarfull/text()"),
+      personastate: extract_integer(p, ~x"//personastate/text()"),
+      realname: extract_string(p, ~x"//realname/text()"),
+      timecreated: extract_string(p, ~x"//timecreated/text()"),
+      personastateflags: extract_string(p, ~x"//personastateflags/text()"),
+      primaryclanid: extract_string(p, ~x"//primaryclanid/text()"),
+      loccountrycode: extract_string(p, ~x"//loccountrycode/text()"),
+    }
   end
 
   @doc false

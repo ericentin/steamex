@@ -62,7 +62,7 @@ defmodule Steamex.Auth do
       raise "Invalid auth attempt: #{inspect payload}"
     end
 
-    "http://steamcommunity.com/openid/id/" <> steamid64_str = payload["openid.identity"]
+    "https://steamcommunity.com/openid/id/" <> steamid64_str = payload["openid.identity"]
 
     {steamid64, ""} = Integer.parse(steamid64_str)
 
