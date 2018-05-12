@@ -87,8 +87,8 @@ defmodule Steamex.SteamID do
       iex> Steamex.SteamID.base_url(76561197961358433)
       "http://steamcommunity.com/profiles/76561197961358433"
 
-      iex> Steamex.SteamID.base_url("antipax")
-      "http://steamcommunity.com/id/antipax"
+      iex> Steamex.SteamID.base_url("ericentin")
+      "http://steamcommunity.com/id/ericentin"
   """
   @spec base_url(pos_integer | binary) :: binary
   def base_url(community_id_or_custom_url) when is_integer(community_id_or_custom_url) do

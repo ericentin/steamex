@@ -1,7 +1,7 @@
 defmodule Steamex.Mixfile do
   use Mix.Project
 
-  @version "0.0.8"
+  @version "0.0.9"
 
   def project do
     [
@@ -17,7 +17,7 @@ defmodule Steamex.Mixfile do
       docs: [
         source_ref: "v#{@version}",
         main: "Steamex",
-        source_url: "https://github.com/antipax/steamex"
+        source_url: "https://github.com/ericentin/steamex"
       ]
     ]
   end
@@ -57,7 +57,7 @@ defmodule Steamex.Mixfile do
       maintainers: ["Eric Entin"],
       licenses: ["Apache 2.0"],
       links: %{
-        "GitHub" => "https://github.com/antipax/steamex"
+        "GitHub" => "https://github.com/ericentin/steamex"
       }
     ]
   end
