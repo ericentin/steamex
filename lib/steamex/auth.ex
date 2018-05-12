@@ -14,16 +14,18 @@ defmodule Steamex.Auth do
     If you use `Steamex.Auth.Phoenix`, this is `realm <> "/steamex/return_to"`
     by default.
   """
-  @spec auth_url(String.t, String.t) :: String.t
+  @spec auth_url(String.t(), String.t()) :: String.t()
   def auth_url(realm, return_to) when is_binary(realm) and is_binary(return_to) do
-    @steam_login_url_base <> "?" <> URI.encode_query %{
-      "openid.claimed_id" => "http://specs.openid.net/auth/2.0/identifier_select",
-      "openid.identity" => "http://specs.openid.net/auth/2.0/identifier_select",
-      "openid.mode" => "checkid_setup",
-      "openid.ns" => "http://specs.openid.net/auth/2.0",
-      "openid.realm" => realm,
-      "openid.return_to" => return_to
-    }
+    @steam_login_url_base <>
+      "?" <>
+      URI.encode_query(%{
+        "openid.claimed_id" => "http://specs.openid.net/auth/2.0/identifier_select",
+        "openid.identity" => "http://specs.openid.net/auth/2.0/identifier_select",
+        "openid.mode" => "checkid_setup",
+        "openid.ns" => "http://specs.openid.net/auth/2.0",
+        "openid.realm" => realm,
+        "openid.return_to" => return_to
+      })
   end
 
   @doc """
@@ -54,12 +56,12 @@ defmodule Steamex.Auth do
     Application.ensure_all_started(:httpoison)
 
     %HTTPoison.Response{status_code: 200, body: body} =
-      httpoison.post! @steam_login_url_base, URI.encode_query(params), [
+      httpoison.post!(@steam_login_url_base, URI.encode_query(params), [
         {"Content-Type", "application/x-www-form-urlencoded"}
-      ]
+      ])
 
-    unless String.contains? body, "is_valid:true" do
-      raise "Invalid auth attempt: #{inspect payload}"
+    unless String.contains?(body, "is_valid:true") do
+      raise "Invalid auth attempt: #{inspect(payload)}"
     end
 
     "https://steamcommunity.com/openid/id/" <> steamid64_str = payload["openid.identity"]

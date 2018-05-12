@@ -2,6 +2,6 @@ language: elixir
 sudo: false
 dist: trusty
 elixir:
-  - 1.4.2
+  - 1.6.5
 otp_release:
-  - 19.3
+  - 20.3.5

@@ -55,7 +55,7 @@ defmodule Steamex.Auth.Plug do
           end
 
         conn
-        |> C.fetch_session
+        |> C.fetch_session()
         |> C.put_session(:steamex_steamid64, steamid64)
         |> C.put_resp_header("location", to)
         |> C.send_resp(302, "")

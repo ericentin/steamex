@@ -1,20 +1,24 @@
 defmodule Steamex.Mixfile do
   use Mix.Project
 
-  @version "0.0.7"
+  @version "0.0.8"
 
   def project do
-    [app: :steamex,
-     version: @version,
-     elixir: "~> 1.0",
-     description: description(),
-     package: package(),
-     build_embedded: Mix.env == :prod,
-     start_permanent: Mix.env == :prod,
-     deps: deps(),
-     name: "Steamex",
-     docs: [source_ref: "v#{@version}", main: "Steamex",
-            source_url: "https://github.com/antipax/steamex"]
+    [
+      app: :steamex,
+      version: @version,
+      elixir: "~> 1.0",
+      description: description(),
+      package: package(),
+      build_embedded: Mix.env() == :prod,
+      start_permanent: Mix.env() == :prod,
+      deps: deps(),
+      name: "Steamex",
+      docs: [
+        source_ref: "v#{@version}",
+        main: "Steamex",
+        source_url: "https://github.com/antipax/steamex"
+      ]
     ]
   end
 
@@ -36,11 +40,9 @@ defmodule Steamex.Mixfile do
   # Type `mix help deps` for more examples and options
   defp deps do
     [
-      {:httpoison, "~> 0.11"},
+      {:httpoison, "~> 1.1"},
       {:sweet_xml, "~> 0.6"},
-
       {:plug, "~> 1.3", optional: true},
-
       {:ex_doc, ">= 0.0.0", only: :dev}
     ]
   end

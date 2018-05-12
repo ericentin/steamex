@@ -9,7 +9,7 @@ defmodule Steamex.Auth.PlugTest do
     end
   end
 
-  @fail_opts Steamex.Auth.Plug.init steamex_auth: FailAuth
+  @fail_opts Steamex.Auth.Plug.init(steamex_auth: FailAuth)
 
   test "fails" do
     conn = conn(:get, "/steamex/return_to")
@@ -27,36 +27,36 @@ defmodule Steamex.Auth.PlugTest do
     end
   end
 
-  @success_opts Steamex.Auth.Plug.init steamex_auth: SuccessAuth
+  @success_opts Steamex.Auth.Plug.init(steamex_auth: SuccessAuth)
 
   test "success" do
-    assert_success "/"
+    assert_success("/")
   end
 
   test "success with config override redirect_to" do
     try do
       Application.put_env(:steamex, Steamex, redirect_to: "/foobar")
 
-      assert_success "/foobar"
+      assert_success("/foobar")
     after
       Application.delete_env(:steamex, Steamex)
     end
   end
 
   test "success with query param override redirect_to" do
-    assert_success "/herpderp", "/steamex/return_to?redirect_to=/herpderp"
+    assert_success("/herpderp", "/steamex/return_to?redirect_to=/herpderp")
   end
 
   test "query param override redirect_to does not accept protocol-relative URLs" do
-    assert_success "/", "/steamex/return_to?redirect_to=//google.com"
+    assert_success("/", "/steamex/return_to?redirect_to=//google.com")
   end
 
   test "query param override redirect_to does not accept protocol-relative URLs with extra slashes" do
-    assert_success "/", "/steamex/return_to?redirect_to=///google.com"
+    assert_success("/", "/steamex/return_to?redirect_to=///google.com")
   end
 
   test "query param override redirect_to does not accept absolute URLs" do
-    assert_success "/", "/steamex/return_to?redirect_to=http://google.com"
+    assert_success("/", "/steamex/return_to?redirect_to=http://google.com")
   end
 
   defp assert_success(redirect_to, url \\ "/steamex/return_to") do

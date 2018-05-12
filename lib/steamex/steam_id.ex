@@ -14,7 +14,7 @@ defmodule Steamex.SteamID do
   @spec community_id_to_steam_id(pos_integer) :: binary
   def community_id_to_steam_id(community_id) do
     steam_id1 = rem(community_id, 2)
-    steam_id2 = community_id - 76561197960265728
+    steam_id2 = community_id - 76_561_197_960_265_728
 
     unless steam_id2 > 0 do
       raise "SteamID #{community_id} is too small."
@@ -39,7 +39,7 @@ defmodule Steamex.SteamID do
       raise "SteamID3 only supports public universe"
     end
 
-    steam_id2 = community_id - 76561197960265728
+    steam_id2 = community_id - 76_561_197_960_265_728
 
     unless steam_id2 > 0 do
       raise "SteamID #{community_id} is too small."
@@ -61,16 +61,18 @@ defmodule Steamex.SteamID do
       76561197961358433
   """
   @spec steam_id_to_community_id(binary) :: pos_integer
-  def steam_id_to_community_id(<<"STEAM_", _ :: binary-size(1),":", steam_id1 :: binary-size(1), ":", steam_id2 :: binary>>) do
+  def steam_id_to_community_id(
+        <<"STEAM_", _::binary-size(1), ":", steam_id1::binary-size(1), ":", steam_id2::binary>>
+      ) do
     {steam_id1, ""} = Integer.parse(steam_id1)
     {steam_id2, ""} = Integer.parse(steam_id2)
-    steam_id1 + steam_id2 * 2 + 76561197960265728
+    steam_id1 + steam_id2 * 2 + 76_561_197_960_265_728
   end
 
-  def steam_id_to_community_id(<<"[U:", steam_id1 :: binary-size(1), ":", steam_id2 :: binary>>) do
+  def steam_id_to_community_id(<<"[U:", steam_id1::binary-size(1), ":", steam_id2::binary>>) do
     {steam_id1, ""} = Integer.parse(steam_id1)
     {steam_id2, "]"} = Integer.parse(steam_id2)
-    steam_id1 + steam_id2 + 76561197960265727
+    steam_id1 + steam_id2 + 76_561_197_960_265_727
   end
 
   def steam_id_to_community_id(steam_id) do
@@ -89,11 +91,11 @@ defmodule Steamex.SteamID do
       "http://steamcommunity.com/id/antipax"
   """
   @spec base_url(pos_integer | binary) :: binary
-  def base_url(community_id_or_custom_url) when is_integer community_id_or_custom_url do
+  def base_url(community_id_or_custom_url) when is_integer(community_id_or_custom_url) do
     "http://steamcommunity.com/profiles/#{community_id_or_custom_url}"
   end
 
-  def base_url(community_id_or_custom_url) when is_binary community_id_or_custom_url do
+  def base_url(community_id_or_custom_url) when is_binary(community_id_or_custom_url) do
     "http://steamcommunity.com/id/#{community_id_or_custom_url}"
   end
 end

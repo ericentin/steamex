@@ -21,12 +21,16 @@ defmodule Steamex.Auth.Phoenix.Router do
     add your own view helper that calls the Steamex one with the appropriate
     options.
   """
-  @spec steamex_route_auth(String.t, Keyword.t, Keyword.t) :: Macro.t
-  defmacro steamex_route_auth(url \\ "/steamex/return_to", steamex_auth_plug_opts \\ [], router_opts \\ []) do
+  @spec steamex_route_auth(String.t(), Keyword.t(), Keyword.t()) :: Macro.t()
+  defmacro steamex_route_auth(
+             url \\ "/steamex/return_to",
+             steamex_auth_plug_opts \\ [],
+             router_opts \\ []
+           ) do
     router_opts = Keyword.merge([as: :steamex_auth_return_to], router_opts)
 
     quote do
-      get unquote(url), Steamex.Auth.Plug, unquote(steamex_auth_plug_opts), unquote(router_opts)
+      get(unquote(url), Steamex.Auth.Plug, unquote(steamex_auth_plug_opts), unquote(router_opts))
     end
   end
 end

@@ -16,7 +16,7 @@ defmodule Steamex.Auth.Phoenix.View do
     `:return_to_helper`. If you have used the default options
     for `steamex_route_auth`, you do not need to set this option.
   """
-  @spec steamex_auth_url(Plug.Conn.t, Keyword.t) :: String.t
+  @spec steamex_auth_url(Plug.Conn.t(), Keyword.t()) :: String.t()
   def steamex_auth_url(conn, options \\ []) do
     steamex_auth_url(conn, options, Phoenix.Controller)
   end
